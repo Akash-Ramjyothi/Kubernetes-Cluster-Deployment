@@ -1,7 +1,11 @@
-# Hello Kubernetes!
+# Kubernetes Cluster - App Deployment
 
-[![Docker Image Version (latest by date)](https://img.shields.io/docker/v/paulbouwer/hello-kubernetes)](https://hub.docker.com/repository/docker/paulbouwer/hello-kubernetes) [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/paulbouwer/hello-kubernetes)](https://hub.docker.com/repository/docker/paulbouwer/hello-kubernetes) [![Docker Pulls](https://img.shields.io/docker/pulls/paulbouwer/hello-kubernetes)](https://hub.docker.com/repository/docker/paulbouwer/hello-kubernetes)
+## Developed By:
+- Akash Ramjyothi
+- E-Mail ID: akash.ramjyothi@gmail.com
+- PH: +91 8939928002
 
+## Description:
 This container image can be deployed on a Kubernetes cluster. When accessed via a web browser on port `8080`, it will display:
 
 - a default **Hello world!** message
@@ -12,7 +16,9 @@ This container image can be deployed on a Kubernetes cluster. When accessed via 
 
 The default "Hello world!" message displayed can be overridden using the `MESSAGE` environment variable. The default port of 8080 can be overriden using the `PORT` environment variable.
 
-## Deploy
+## Note: This project focuses on Deployment of the Web App into Kubernetes rather than Development of the Application
+
+## Steps I followed for Deployment:
 
 ### Standard Configuration
 
@@ -142,37 +148,6 @@ spec:
           value: "80"
 ```
 
-## Cutomize URL context path
-
-If you have an ingress that routes to a custom context path then you can customize the URL context path. The css files and the images will be loaded properly in that case.
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hello-kubernetes-custom
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: hello-kubernetes-custom
-  template:
-    metadata:
-      labels:
-        app: hello-kubernetes-custom
-    spec:
-      containers:
-      - name: hello-kubernetes
-        image: paulbouwer/hello-kubernetes:1.9
-        ports:
-        - containerPort: 8080
-        env:
-        - name: MESSAGE
-          value: I just deployed this on Kubernetes!
-        - name: CONTEXT_PATH
-          value: "/api/v1/hello-kubernetes/"
-```
-
 ## Build Container Image
 
 If you'd like to build the image yourself, then you can do so as follows. The `build-arg` parameters provides metadata as defined in [OCI image spec annotations](https://github.com/opencontainers/image-spec/blob/master/annotations.md).
@@ -187,10 +162,5 @@ Powershell
 PS> docker build --no-cache --build-arg IMAGE_VERSION="1.9" --build-arg IMAGE_CREATE_DATE="$(Get-Date((Get-Date).ToUniversalTime()) -UFormat '%Y-%m-%dT%H:%M:%SZ')" --build-arg IMAGE_SOURCE_REVISION="$(git rev-parse HEAD)" -f Dockerfile -t "hello-kubernetes:1.9" app
 ```
 
-## Develop Application
-
-If you have [VS Code](https://code.visualstudio.com/) and the [Visual Studio Code Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension installed, the `.devcontainer` folder will be used to build a container based node.js 13 development environment. 
-
-Port `8080` has been configured to be forwarded to your host. If you run `npm start` in the `app` folder in the VS Code Remote Containers terminal, you will be able to access the website on `http://localhost:8080`. You can change the port in the `.devcontainer\devcontainer.json` file under the `appPort` key.
-
-See [here](https://code.visualstudio.com/docs/remote/containers) for more details on working with this setup.
+## Note:
+The above steps might not necessarily work with your Machine or Project.
